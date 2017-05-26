@@ -1,1 +1,1 @@
-Przemys≥aw Konik
+Przemys≈Çaw Konik

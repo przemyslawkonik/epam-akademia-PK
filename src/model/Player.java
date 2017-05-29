@@ -9,11 +9,23 @@ public class Player {
 
     private Mark mark;
 
+    public Player() {
+
+    }
+
     public Player(Mark mark) {
         this.mark = mark;
     }
 
-    public int setMark(int row, int column) {
+    public int markField(int row, int column) {
         return row*3+column;
+    }
+
+    public void setMark(Mark mark) {
+        this.mark = mark;
+    }
+
+    public Mark getMark() {
+        return mark;
     }
 }

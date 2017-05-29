@@ -37,11 +37,21 @@ public class Board {
     }
 
     public void setField(int field) {
-        if(field > size || field < 0)
+        if (field > size || field < 0) {
             System.out.println("Field out of range");
-        if(board.get(field).equals(Mark.X)) {
-            System.out.println("This field is already marked");
         }
-        board.set(field, Mark.X);
+        if (board.get(field).equals(Mark.X) || board.get(field).equals(Mark.O)) {
+            System.out.println("This field is already marked");
+        } else {
+            board.set(field, Mark.X);
+        }
+    }
+
+    public boolean isGameEnd() {
+        for(Mark m : board) {
+            if(m.equals(Mark.EMPTY))
+                return false;
+        }
+        return true;
     }
 }

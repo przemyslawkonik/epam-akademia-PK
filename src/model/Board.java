@@ -29,9 +29,13 @@ public class Board {
         for (int i = 0; i < size; i++) {
             if (i % 3 == 0) {
                 System.out.println();
-                continue;
+                //continue;
             }
             System.out.print(board.get(i));
         }
+    }
+
+    public void setField(int field) {
+        board.set(field, Mark.X);
     }
 }

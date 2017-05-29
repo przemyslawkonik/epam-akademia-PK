@@ -5,7 +5,7 @@ package model;
  */
 public class Player {
 
-    public void setMark(int row, int column) {
-
+    public int setMark(int row, int column) {
+        return row*3+column;
     }
 }

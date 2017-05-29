@@ -1,7 +1,5 @@
 package model.enums;
 
-import main.Main;
-
 /**
  * Created by Przemysław Konik on 2017-05-29.
  */

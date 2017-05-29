@@ -36,14 +36,17 @@ public class Board {
         System.out.println();
     }
 
-    public void setField(int field) {
+    public boolean setField(int field, Mark mark) {
         if (field > size || field < 0) {
             System.out.println("Field out of range");
+            return false;
         }
         if (board.get(field).equals(Mark.X) || board.get(field).equals(Mark.O)) {
             System.out.println("This field is already marked");
+            return false;
         } else {
-            board.set(field, Mark.X);
+            board.set(field, mark);
+            return true;
         }
     }
 

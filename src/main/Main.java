@@ -17,11 +17,15 @@ public class Main {
         Player player2 = new Player();
 
         whoIsFirst(player1, player2);
-        while(!board.isGameEnd()) {
-            board.setField(turn(player1));
-            board.showBoard();
-            board.setField(turn(player2));
-            board.showBoard();
+        //System.out.println(player1.getMark()+""+player2.getMark());
+        while (!board.isGameEnd()) {
+            do {
+                board.showBoard();
+            }while(!board.setField(turn(player1), player1.getMark()));
+
+            do {
+                board.showBoard();
+            }while(!board.setField(turn(player2), player2.getMark()));
         }
     }
 

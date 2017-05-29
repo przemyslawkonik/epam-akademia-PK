@@ -12,35 +12,34 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        Board board = new Board();
-        Player player1 = new Player();
-        Player player2 = new Player();
-        Player winner;
+        while (true) {
+            Board board = new Board();
+            Player player1 = new Player();
+            Player player2 = new Player();
+            Player winner;
 
-        whoIsFirst(player1, player2);
-        //System.out.println(player1.getMark()+""+player2.getMark());
-        do {
+            whoIsFirst(player1, player2);
+            //System.out.println(player1.getMark()+""+player2.getMark());
             do {
-                board.showBoard();
-            }while(!board.setField(turn(player1), player1.getMark()));
+                do {
+                    board.showBoard();
+                } while (!board.setField(turn(player1), player1.getMark()));
+                
+                if (board.isGameEnd()) {
+                    winner = player1;
+                    break;
+                }
 
-            /*
-            if(!board.isGameEnd()) {
-                winner = player1;
-                break;
-            }
-            */
+                do {
+                    board.showBoard();
+                } while (!board.setField(turn(player2), player2.getMark()));
 
-            do {
-                board.showBoard();
-            }while(!board.setField(turn(player2), player2.getMark()));
+                winner = player2;
 
-            //winner = player2;
+            } while (!board.isGameEnd());
 
-        }while(!board.isGameEnd());
-
-        //System.out.println("Winner is " + winner.getMark());
-
+            System.out.println("Winner is " + winner.getMark());
+        }
     }
 
     public static void whoIsFirst(Player player1, Player player2) {

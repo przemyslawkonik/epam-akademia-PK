@@ -7,7 +7,8 @@ import main.Main;
  */
 public enum Mark {
    O("O"),
-    X("X");
+    X("X"),
+   EMPTY("-");
 
    private String mark;
 

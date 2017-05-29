@@ -21,7 +21,7 @@ public class Board {
 
     private void fillBoard() {
         for (int i = 0; i < size; i++) {
-            board.add(Mark.O);
+            board.add(Mark.EMPTY);
         }
     }
 
@@ -33,9 +33,15 @@ public class Board {
             }
             System.out.print(board.get(i));
         }
+        System.out.println();
     }
 
     public void setField(int field) {
+        if(field > size || field < 0)
+            System.out.println("Field out of range");
+        if(board.get(field).equals(Mark.X)) {
+            System.out.println("This field is already marked");
+        }
         board.set(field, Mark.X);
     }
 }

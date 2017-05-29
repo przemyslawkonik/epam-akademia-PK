@@ -24,7 +24,7 @@ public class Main {
                 do {
                     board.showBoard();
                 } while (!board.setField(turn(player1), player1.getMark()));
-                
+
                 if (board.isGameEnd()) {
                     winner = player1;
                     break;
@@ -38,7 +38,11 @@ public class Main {
 
             } while (!board.isGameEnd());
 
-            System.out.println("Winner is " + winner.getMark());
+            if(board.isBoardFull()) {
+                System.out.println("Remis");
+            } else {
+                System.out.println("Winner is " + winner.getMark());
+            }
         }
     }
 

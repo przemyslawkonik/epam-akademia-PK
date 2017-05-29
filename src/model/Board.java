@@ -12,10 +12,12 @@ public class Board {
 
     private static final int size = 9;
     private List<Mark> board;
+    private boolean boardFull;
 
     public Board() {
         board = new LinkedList<>();
         fillBoard();
+        boardFull = false;
     }
 
     private void fillBoard() {
@@ -50,14 +52,22 @@ public class Board {
     }
 
     public boolean isGameEnd() {
-        boolean result = false;
+        //boolean result = false;
         if (isHorizontalWin())
             return true;
         if (isVerticalWin())
             return true;
         if (isAnotherWin())
             return true;
-        return result;
+
+        for(Mark m : board) {
+            if(m.equals(Mark.EMPTY)) {
+                boardFull = false;
+                return false;
+            }
+        }
+        boardFull = true;
+        return true;
     }
 
     //should check field != -
@@ -97,6 +107,10 @@ public class Board {
             if (board.get(2).equals(board.get(4)) && board.get(4).equals(board.get(6)) && board.get(2).equals(board.get(6)))
                 return true;
         return false;
+    }
+
+    public boolean isBoardFull() {
+        return boardFull;
     }
 
 }

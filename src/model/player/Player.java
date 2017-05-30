@@ -40,10 +40,8 @@ public class Player {
     public void setOpositeMark() {
         if (mark.equals(Mark.O)) {
             setMark(Mark.X);
-            System.out.println("zmiana na mark X");
         } else if (mark.equals(Mark.X)) {
             setMark(Mark.O);
-            System.out.println("zmiana na mark O");
         }
     }
 

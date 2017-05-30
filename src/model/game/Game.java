@@ -33,7 +33,10 @@ public class Game {
             answer = scanner.nextLine().toUpperCase();
             if(answer.equals("Y")) {
                 board.clear();
+                win = false;
                 play();
+                board.show();
+                showResult();
             } else if (answer.equals("N")) {
                 System.exit(0);
             }
@@ -41,7 +44,6 @@ public class Game {
     }
 
     private void play() {
-        win = false;
         player = whoIsFirst();
         while(true) {
             switch (player.getMark()) {
@@ -59,9 +61,6 @@ public class Game {
             }
             player.setOpositeMark();
         }
-        //rezultat po zakonczeniu rundy
-        board.show();
-        showResult();
     }
 
     private void showResult() {
@@ -171,7 +170,5 @@ public class Game {
         }
         return true;
     }
-
-
 
 }

@@ -29,7 +29,7 @@ public class Board {
         }
     }
 
-    public void showBoard() {
+    public void show() {
         int counter = 0;
         for(Field f : fields) {
             if(counter == columns) {

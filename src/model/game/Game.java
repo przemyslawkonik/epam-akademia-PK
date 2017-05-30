@@ -16,7 +16,7 @@ import java.util.Scanner;
 public class Game {
 
     private final Board board;
-    
+
     public Game() {
         board = new Board(Size.SMALL);
     }
@@ -69,7 +69,7 @@ public class Game {
         System.out.println("Player " + player.getMark() + " turn");
         int row, column;
         while (true) {
-            board.showBoard();
+            board.show();
             try {
                 System.out.println("Select row: ");
                 row = player.selectRow(board);

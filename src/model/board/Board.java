@@ -39,6 +39,7 @@ public class Board {
             System.out.print(f.getMark());
             counter++;
         }
+        System.out.println();
     }
 
     public void setField(int field, Mark mark) {

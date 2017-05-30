@@ -2,6 +2,7 @@ package main;
 
 import model.board.Board;
 import model.board.Size;
+import model.game.Game;
 
 /**
  * Created by Przemysław Konik on 2017-05-29.
@@ -17,6 +18,9 @@ public class Main {
 
         Board board2 = new Board(Size.MEDIUM);
         board2.showBoard();
+
+        Game game = new Game();
+        game.play();
     }
 
 }

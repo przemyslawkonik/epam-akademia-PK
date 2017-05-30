@@ -10,6 +10,14 @@ public class Player {
 
     private Mark mark;
 
+    public Player() {
+
+    }
+
+    public Player(Mark mark) {
+        this.mark = mark;
+    }
+
     public Mark getMark() {
         return mark;
     }

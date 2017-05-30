@@ -3,12 +3,12 @@ package model.game;
 import model.board.Board;
 import model.board.FieldIsAlreadyMarkedException;
 import model.board.Size;
+import model.field.Field;
 import model.field.Mark;
 import model.player.Player;
 import model.player.UnknownPlayerException;
 
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Created by Przemysław Konik on 2017-05-30.
@@ -16,9 +16,11 @@ import java.util.Scanner;
 public class Game {
 
     private final Board board;
+    private boolean win;
 
     public Game() {
         board = new Board(Size.SMALL);
+        win = false;
     }
 
     public void start() {
@@ -26,31 +28,41 @@ public class Game {
         String answer;
         do {
             System.out.println("Do you want to start a new game (y or n)?");
-            answer = scanner.nextLine();
-            if(answer.equals("y")) {
+            answer = scanner.nextLine().toUpperCase();
+            if(answer.equals("Y")) {
                 board.clear();
                 play();
-            } else if (answer.equals("n")) {
+            } else if (answer.equals("N")) {
                 System.exit(0);
             }
         }while(true);
     }
 
     private void play() {
+        win = false;
         Player player = whoIsFirst();
-        while(!isGameEnd()) {
+        while(true) {
             switch (player.getMark()) {
                 case O: {
                     turn(player);
-                    player.setMark(Mark.X);
                     break;
                 }
                 case X: {
                     turn(player);
-                    player.setMark(Mark.O);
                     break;
                 }
             }
+            if(isGameEnd()) {
+                break;
+            }
+            player.setOpositeMark();
+        }
+        //rezultat po zakonczeniu rundy
+        board.show();
+        if(win) {
+            System.out.println("The winner is " + player.getMark());
+        } else {
+            System.out.println("Match result: draw");
         }
     }
 
@@ -78,8 +90,8 @@ public class Game {
                 column = player.selectColumn(board);
 
                 board.setField(row, column, player.getMark());
+                win = isHorizontalWin(row) || isVerticalWin(column) || isDiagonalWin();
                 break;
-
             } catch (InputMismatchException e) {
                 System.out.println("Value is not an Integer");
             } catch (ArrayIndexOutOfBoundsException e) {
@@ -91,7 +103,7 @@ public class Game {
     }
 
     private boolean isGameEnd() {
-        return board.isFull();
+        return isWin() || board.isFull();
     }
 
     private Mark setFirst() {
@@ -106,5 +118,54 @@ public class Game {
             throw new UnknownPlayerException();
         }
     }
+
+    private boolean isWin() {
+        return win;
+    }
+
+    private boolean isHorizontalWin(int row) {
+        List<Field> fields = new ArrayList<>();
+        //wypelnienie listy rzedem w ktorym dodano znak
+        for (int i = 0; i < board.getColumns(); i++) {
+            fields.add(board.getField(i + row * board.getColumns()));
+        }
+        return compareFields(fields);
+    }
+
+    private boolean isVerticalWin(int column) {
+        List<Field> fields = new ArrayList<>();
+        //wypelnienie listy kolumna w ktorym dodano znak
+        for (int i = column; i < board.size(); i+=board.getRows()) {
+            fields.add(board.getField(i));
+        }
+        return compareFields(fields);
+    }
+
+    private boolean isDiagonalWin() {
+        List<Field> fields1 = new ArrayList<>();
+        //przekatna od lewej do prawej
+        for (int i = 0; i < board.size(); i+=board.getRows()+1) {
+            fields1.add(board.getField(i));
+        }
+        //przekatna od prawej do lewej
+        List<Field> fields2 = new ArrayList<>();
+        for(int i=board.getRows()-1; i<board.size()-1; i+=board.getRows()-1) {
+            fields2.add(board.getField(i));
+        }
+        return compareFields(fields1) || compareFields(fields2);
+    }
+
+    private boolean compareFields(List<Field> fields) {
+        for (int i = 0; i < fields.size() - 1; i++) {
+            Mark current = fields.get(i).getMark();
+            Mark next = fields.get(i + 1).getMark();
+            if (!current.equals(next) || current.equals(Mark.EMPTY)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
 
 }

@@ -63,6 +63,16 @@ public class Board {
         return true;
     }
 
+    public int size() {
+        return fields.size();
+    }
+
+    public Field getField(int field) {
+        if(field < 0 || field > fields.size())
+            throw new ArrayIndexOutOfBoundsException();
+        return fields.get(field);
+    }
+
     public int getColumns() {
         return columns;
     }

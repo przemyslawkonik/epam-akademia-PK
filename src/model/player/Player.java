@@ -14,6 +14,7 @@ public class Player {
     private Mark mark;
 
     public Player() {
+        this.mark = Mark.EMPTY;
     }
 
     public Player(Mark mark) {
@@ -34,6 +35,16 @@ public class Player {
         if(column < 0 || column >= board.getColumns())
             throw new ArrayIndexOutOfBoundsException();
         return column;
+    }
+
+    public void setOpositeMark() {
+        if (mark.equals(Mark.O)) {
+            setMark(Mark.X);
+            System.out.println("zmiana na mark X");
+        } else if (mark.equals(Mark.X)) {
+            setMark(Mark.O);
+            System.out.println("zmiana na mark O");
+        }
     }
 
     public Mark getMark() {

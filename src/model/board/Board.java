@@ -42,6 +42,11 @@ public class Board {
         System.out.println();
     }
 
+    public void clear() {
+        for(Field f : fields)
+            f.setMark(Mark.EMPTY);
+    }
+
     public void setField(int row, int column, Mark mark) {
         int field = row*rows+column;
         if(fields.get(field).getMark().equals(Mark.X) || fields.get(field).getMark().equals(Mark.O))

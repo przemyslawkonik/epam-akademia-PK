@@ -16,13 +16,27 @@ import java.util.Scanner;
 public class Game {
 
     private final Board board;
-    //private Player player;
-
+    
     public Game() {
         board = new Board(Size.SMALL);
     }
 
-    public void play() {
+    public void start() {
+        Scanner scanner = new Scanner(System.in);
+        String answer;
+        do {
+            System.out.println("Do you want to start a new game (y or n)?");
+            answer = scanner.nextLine();
+            if(answer.equals("y")) {
+                board.clear();
+                play();
+            } else if (answer.equals("n")) {
+                System.exit(0);
+            }
+        }while(true);
+    }
+
+    private void play() {
         Player player = whoIsFirst();
         while(!isGameEnd()) {
             switch (player.getMark()) {

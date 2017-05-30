@@ -16,10 +16,12 @@ import java.util.*;
 public class Game {
 
     private final Board board;
+    private Player player;
     private boolean win;
 
     public Game() {
         board = new Board(Size.SMALL);
+        player = new Player();
         win = false;
     }
 
@@ -40,7 +42,7 @@ public class Game {
 
     private void play() {
         win = false;
-        Player player = whoIsFirst();
+        player = whoIsFirst();
         while(true) {
             switch (player.getMark()) {
                 case O: {
@@ -59,6 +61,10 @@ public class Game {
         }
         //rezultat po zakonczeniu rundy
         board.show();
+        showResult();
+    }
+
+    private void showResult() {
         if(win) {
             System.out.println("The winner is " + player.getMark());
         } else {

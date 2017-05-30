@@ -1,10 +1,12 @@
 package model.board;
 
 /**
- * Created by Beton on 2017-05-30.
+ * Created by Przemysław Konik on 2017-05-29.
  */
 public enum Size {
-    SMALL(3);
+
+    SMALL(3),
+    MEDIUM(4);
 
     private int size;
 
@@ -12,7 +14,7 @@ public enum Size {
         this.size = size;
     }
 
-    public int getSize() {
+    public int get() {
         return size;
     }
 }

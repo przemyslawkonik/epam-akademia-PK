@@ -1,9 +1,10 @@
-package model.enums;
+package model.field;
 
 /**
  * Created by Przemysław Konik on 2017-05-29.
  */
 public enum Mark {
+
     O("O"),
     X("X"),
     EMPTY("-");

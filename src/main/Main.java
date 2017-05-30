@@ -1,6 +1,5 @@
 package main;
 
-import model.Board;
 import model.Player;
 import model.enums.Mark;
 

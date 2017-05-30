@@ -4,19 +4,18 @@ package model.enums;
  * Created by Przemysław Konik on 2017-05-29.
  */
 public enum Mark {
-   O("O"),
+    O("O"),
     X("X"),
-   EMPTY("-");
+    EMPTY("-");
 
-   private String mark;
+    private String mark;
 
-   private Mark(String mark) {
-       this.mark = mark;
-   }
+    private Mark(String mark) {
+        this.mark = mark;
+    }
 
-
-   @Override
+    @Override
     public String toString() {
-       return mark;
-   }
+        return mark;
+    }
 }

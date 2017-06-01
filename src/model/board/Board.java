@@ -14,6 +14,7 @@ public interface Board {
     int rows();
     int columns();
     void setField(int row, int column, Mark mark);
+    void setField(int position, Mark mark);
     Field getField(int row, int column);
     Field getField(int position);
 

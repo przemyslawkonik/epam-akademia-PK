@@ -56,13 +56,16 @@ public class Game {
             }
             mark = mark.setOpposite();
         }
+        board.show();
+        updateStats(mark);
+        showResult(mark);
+    }
+
+    private void updateStats(Mark mark) {
         if(mark.equals(player1.getMark()))
             player1.getStats().addWin();
         else
             player2.getStats().addWin();
-
-        board.show();
-        showResult(mark);
     }
 
     private void showResult(Mark mark) {

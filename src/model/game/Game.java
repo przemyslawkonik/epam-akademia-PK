@@ -115,8 +115,7 @@ public class Game {
                 System.out.println("Select column: ");
                 column = player.selectColumn(board);
 
-                int position = board.getRows() * row + column;
-                board.setField(position, player.getMark());
+                board.setField(row, column, player.getMark());
                 state = new Result().get(row, column, board);
                 break;
             } catch (InputMismatchException e) {

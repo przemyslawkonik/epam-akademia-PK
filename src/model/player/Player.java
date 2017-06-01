@@ -28,7 +28,7 @@ public class Player {
         Scanner scanner = new Scanner(System.in);
         int row = scanner.nextInt();
         row-=1;
-        if(row < 0 || row >= board.getRows())
+        if(row < 0 || row >= board.rows())
             throw new ArrayIndexOutOfBoundsException();
         return row;
     }
@@ -37,7 +37,7 @@ public class Player {
         Scanner scanner = new Scanner(System.in);
         int column = scanner.nextInt();
         column-=1;
-        if(column < 0 || column >= board.getColumns())
+        if(column < 0 || column >= board.columns())
             throw new ArrayIndexOutOfBoundsException();
         return column;
     }

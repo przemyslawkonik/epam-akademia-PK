@@ -10,10 +10,11 @@ public interface Board {
     void show();
     void clear();
     boolean isFull();
-    int getSize();
-    int getRows();
-    int getColumns();
-    void setField(int position, Mark mark);
+    int size();
+    int rows();
+    int columns();
+    void setField(int row, int column, Mark mark);
+    Field getField(int row, int column);
     Field getField(int position);
 
 }

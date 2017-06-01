@@ -5,7 +5,28 @@ package model.board;
  */
 public enum Size {
 
-    SMALL();
+    SMALL(3,3),
+    MEDIUM(4,4),
+    LARGE(5,5);
 
-    private Size() {}
+    int rows;
+    int columns;
+
+    private Size(int rows, int columns) {
+        this.rows = rows;
+        this.columns = columns;
+    }
+
+    public int rows() {
+        return rows;
+    }
+
+    public int columns() {
+        return columns;
+    }
+
+    @Override
+    public String toString() {
+        return rows+"x"+columns;
+    }
 }

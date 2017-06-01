@@ -22,25 +22,25 @@ public class TicTacToeBoard implements Board{
         init();
     }
 
+    /*
     public TicTacToeBoard(int rows, int columns) {
         fields = new LinkedList<>();
         setRowsAndColumns(rows, columns);
         init();
     }
+    */
 
     private void setRowsAndColumns(Size size) {
-        switch (size) {
-            case SMALL: {
-                columns = 3;
-                rows = 3;
-            }
-        }
+        rows = size.rows();
+        columns = size.columns();
     }
 
+    /*
     private void setRowsAndColumns(int rows, int columns) {
         this.rows = rows;
         this.columns = columns;
     }
+    */
 
     private void init() {
         int size = rows*columns;
@@ -49,20 +49,21 @@ public class TicTacToeBoard implements Board{
     }
 
     @Override
-    public int getRows() {
-        return rows;
-    }
-
-    @Override
-    public int getColumns() {
-        return columns;
-    }
-
-    @Override
-    public void setField(int position, Mark mark) {
+    public void setField(int row, int column, Mark mark) {
+        int position = rows * row + column;
+        if(position < 0 || position > fields.size())
+            throw new ArrayIndexOutOfBoundsException();
         if(fields.get(position).getMark().equals(Mark.X) || fields.get(position).getMark().equals(Mark.O))
             throw new FieldIsAlreadyMarkedException();
         fields.get(position).setMark(mark);
+    }
+
+    @Override
+    public Field getField(int row, int column) {
+        int position = rows * row + column;
+        if(position < 0 || position > fields.size())
+            throw new ArrayIndexOutOfBoundsException();
+        return fields.get(position);
     }
 
     @Override
@@ -70,11 +71,6 @@ public class TicTacToeBoard implements Board{
         if(position < 0 || position > fields.size())
             throw new ArrayIndexOutOfBoundsException();
         return fields.get(position);
-    }
-
-    @Override
-    public int getSize() {
-        return columns*rows;
     }
 
     @Override
@@ -104,6 +100,21 @@ public class TicTacToeBoard implements Board{
                 return false;
         }
         return true;
+    }
+
+    @Override
+    public int size() {
+        return columns*rows;
+    }
+
+    @Override
+    public int rows() {
+        return rows;
+    }
+
+    @Override
+    public int columns() {
+        return columns;
     }
 
 }

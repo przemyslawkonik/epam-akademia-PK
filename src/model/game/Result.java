@@ -24,8 +24,8 @@ public class Result {
     private boolean isHorizontalWin(int row, Board board) {
         List<Field> fields = new ArrayList<>();
         //wypelnienie listy rzedem w ktorym dodano znak
-        for (int i = 0; i < board.getColumns(); i++) {
-            fields.add(board.getField(i + row * board.getColumns()));
+        for (int i = 0; i < board.columns(); i++) {
+            fields.add(board.getField(i + row * board.columns()));
         }
         return compareFields(fields);
     }
@@ -33,7 +33,7 @@ public class Result {
     private boolean isVerticalWin(int column, Board board) {
         List<Field> fields = new ArrayList<>();
         //wypelnienie listy kolumna w ktorym dodano znak
-        for (int i = column; i < board.getSize(); i+=board.getRows()) {
+        for (int i = column; i < board.size(); i+=board.rows()) {
             fields.add(board.getField(i));
         }
         return compareFields(fields);
@@ -42,12 +42,12 @@ public class Result {
     private boolean isDiagonalWin(Board board) {
         List<Field> fields1 = new ArrayList<>();
         //przekatna od lewej do prawej
-        for (int i = 0; i < board.getSize(); i+=board.getRows()+1) {
+        for (int i = 0; i < board.size(); i+=board.rows()+1) {
             fields1.add(board.getField(i));
         }
         //przekatna od prawej do lewej
         List<Field> fields2 = new ArrayList<>();
-        for(int i=board.getRows()-1; i<board.getSize()-1; i+=board.getRows()-1) {
+        for(int i=board.rows()-1; i<board.size()-1; i+=board.rows()-1) {
             fields2.add(board.getField(i));
         }
         return compareFields(fields1) || compareFields(fields2);

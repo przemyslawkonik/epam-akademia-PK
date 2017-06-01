@@ -6,7 +6,6 @@ import model.board.TicTacToeBoard;
 import model.field.FieldIsAlreadyMarkedException;
 import model.field.Mark;
 import model.player.Player;
-import model.player.UnknownPlayerException;
 
 import java.util.*;
 
@@ -87,22 +86,11 @@ public class Game {
         System.out.println("Who is starting (O or X)");
         while(true) {
             try{
-                return getFirst();
-            }catch (UnknownPlayerException e) {
+                String input = new Scanner(System.in).nextLine().toUpperCase();
+                return Mark.valueOf(input);
+            }catch (IllegalArgumentException e) {
                 System.out.println("Unknown player");
             }
-        }
-    }
-
-    private Mark getFirst() {
-        Scanner scanner = new Scanner(System.in);
-        String choice = scanner.nextLine().toUpperCase();
-        if (choice.equals(Mark.O.toString())) {
-            return Mark.O;
-        } else if (choice.equals(Mark.X.toString())) {
-            return Mark.X;
-        } else {
-            throw new UnknownPlayerException();
         }
     }
 

@@ -1,8 +1,8 @@
 package model.player;
 
-
 import model.board.Board;
 import model.field.Mark;
+import model.stats.Stats;
 
 import java.util.Scanner;
 
@@ -12,18 +12,22 @@ import java.util.Scanner;
 public class Player {
 
     private Mark mark;
+    private Stats stats;
 
     public Player() {
         this.mark = Mark.EMPTY;
+        stats = new Stats();
     }
 
     public Player(Mark mark) {
         this.mark = mark;
+        stats = new Stats();
     }
 
     public int selectRow(Board board) {
         Scanner scanner = new Scanner(System.in);
         int row = scanner.nextInt();
+        row-=1;
         if(row < 0 || row >= board.getRows())
             throw new ArrayIndexOutOfBoundsException();
         return row;
@@ -32,17 +36,14 @@ public class Player {
     public int selectColumn(Board board) {
         Scanner scanner = new Scanner(System.in);
         int column = scanner.nextInt();
+        column-=1;
         if(column < 0 || column >= board.getColumns())
             throw new ArrayIndexOutOfBoundsException();
         return column;
     }
 
-    public void setOpositeMark() {
-        if (mark.equals(Mark.O)) {
-            setMark(Mark.X);
-        } else if (mark.equals(Mark.X)) {
-            setMark(Mark.O);
-        }
+    public Stats getStats() {
+        return stats;
     }
 
     public Mark getMark() {
@@ -52,4 +53,5 @@ public class Player {
     public void setMark(Mark mark) {
         this.mark = mark;
     }
+
 }

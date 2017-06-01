@@ -2,7 +2,7 @@ package model.game;
 
 import model.board.Board;
 import model.board.Size;
-import model.field.Field;
+import model.board.TicTacToeBoard;
 import model.field.FieldIsAlreadyMarkedException;
 import model.field.Mark;
 import model.player.Player;
@@ -16,13 +16,15 @@ import java.util.*;
 public class Game {
 
     private final Board board;
-    private Player player;
-    private boolean win;
+    private Player player1;
+    private Player player2;
+    private State state;
 
     public Game() {
-        board = new Board(Size.SMALL);
-        player = new Player();
-        win = false;
+        board = new TicTacToeBoard(Size.SMALL);
+        player1 = new Player(Mark.O);
+        player2 = new Player(Mark.X);
+        state = State.GAME_IN_PROGRESS;
     }
 
     public void start() {
@@ -33,10 +35,8 @@ public class Game {
             answer = scanner.nextLine().toUpperCase();
             if(answer.equals("Y")) {
                 board.clear();
-                win = false;
+                state = State.GAME_IN_PROGRESS;
                 play();
-                board.show();
-                showResult();
             } else if (answer.equals("N")) {
                 System.exit(0);
             }
@@ -44,41 +44,62 @@ public class Game {
     }
 
     private void play() {
-        player = whoIsFirst();
+        Mark mark = whoIsFirst();
         while(true) {
-            switch (player.getMark()) {
-                case O: {
-                    turn(player);
-                    break;
-                }
-                case X: {
-                    turn(player);
-                    break;
-                }
-            }
-            if(isGameEnd()) {
+            if(mark.equals(player1.getMark()))
+                turn(player1);
+            else
+                turn(player2);
+
+            if(!state.equals(State.GAME_IN_PROGRESS)) {
                 break;
             }
-            player.setOpositeMark();
+            mark = mark.setOpposite();
         }
+        if(mark.equals(player1.getMark()))
+            player1.getStats().addWin();
+        else
+            player2.getStats().addWin();
+
+        board.show();
+        showResult(mark);
     }
 
-    private void showResult() {
-        if(win) {
-            System.out.println("The winner is " + player.getMark());
-        } else {
-            System.out.println("Match result: draw");
-        }
-    }
-
-    private Player whoIsFirst() {
-        while(true) {
-            System.out.println("Who is starting (O or X)");
-            try {
-                return new Player(setFirst());
-            }catch (UnknownPlayerException e) {
-                System.out.println("Unknown Player");
+    private void showResult(Mark mark) {
+        switch (state) {
+            case WIN: {
+                System.out.println("The winner is " + mark + "  " + player1.getMark() + ": " + player1.getStats().getWins() + " | " +
+                        player2.getMark() + ": " + player2.getStats().getWins());
+                break;
             }
+            case DRAW: {
+                System.out.println("The match result is draw   " + player1.getMark() + ": " + player1.getStats().getWins() + " | " +
+                        player2.getMark() + ": " + player2.getStats().getWins());
+                break;
+            }
+        }
+    }
+
+    private Mark whoIsFirst() {
+        System.out.println("Who is starting (O or X)");
+        while(true) {
+            try{
+                return getFirst();
+            }catch (UnknownPlayerException e) {
+                System.out.println("Unknown player");
+            }
+        }
+    }
+
+    private Mark getFirst() {
+        Scanner scanner = new Scanner(System.in);
+        String choice = scanner.nextLine().toUpperCase();
+        if (choice.equals(Mark.O.toString())) {
+            return Mark.O;
+        } else if (choice.equals(Mark.X.toString())) {
+            return Mark.X;
+        } else {
+            throw new UnknownPlayerException();
         }
     }
 
@@ -94,8 +115,9 @@ public class Game {
                 System.out.println("Select column: ");
                 column = player.selectColumn(board);
 
-                board.setField(row, column, player.getMark());
-                win = isHorizontalWin(row) || isVerticalWin(column) || isDiagonalWin();
+                int position = board.getRows() * row + column;
+                board.setField(position, player.getMark());
+                state = new Result().get(row, column, board);
                 break;
             } catch (InputMismatchException e) {
                 System.out.println("Value is not an Integer");
@@ -105,70 +127,6 @@ public class Game {
                 System.out.println("Selected field is already marked");
             }
         }
-    }
-
-    private boolean isGameEnd() {
-        return isWin() || board.isFull();
-    }
-
-    private Mark setFirst() {
-        Scanner scanner = new Scanner(System.in);
-        String choice = scanner.nextLine().toUpperCase();
-
-        if (choice.equals(Mark.O.toString())) {
-            return Mark.O;
-        } else if (choice.equals(Mark.X.toString())) {
-            return Mark.X;
-        } else {
-            throw new UnknownPlayerException();
-        }
-    }
-
-    private boolean isWin() {
-        return win;
-    }
-
-    private boolean isHorizontalWin(int row) {
-        List<Field> fields = new ArrayList<>();
-        //wypelnienie listy rzedem w ktorym dodano znak
-        for (int i = 0; i < board.getColumns(); i++) {
-            fields.add(board.getField(i + row * board.getColumns()));
-        }
-        return compareFields(fields);
-    }
-
-    private boolean isVerticalWin(int column) {
-        List<Field> fields = new ArrayList<>();
-        //wypelnienie listy kolumna w ktorym dodano znak
-        for (int i = column; i < board.size(); i+=board.getRows()) {
-            fields.add(board.getField(i));
-        }
-        return compareFields(fields);
-    }
-
-    private boolean isDiagonalWin() {
-        List<Field> fields1 = new ArrayList<>();
-        //przekatna od lewej do prawej
-        for (int i = 0; i < board.size(); i+=board.getRows()+1) {
-            fields1.add(board.getField(i));
-        }
-        //przekatna od prawej do lewej
-        List<Field> fields2 = new ArrayList<>();
-        for(int i=board.getRows()-1; i<board.size()-1; i+=board.getRows()-1) {
-            fields2.add(board.getField(i));
-        }
-        return compareFields(fields1) || compareFields(fields2);
-    }
-
-    private boolean compareFields(List<Field> fields) {
-        for (int i = 0; i < fields.size() - 1; i++) {
-            Mark current = fields.get(i).getMark();
-            Mark next = fields.get(i + 1).getMark();
-            if (!current.equals(next) || current.equals(Mark.EMPTY)) {
-                return false;
-            }
-        }
-        return true;
     }
 
 }

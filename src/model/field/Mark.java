@@ -15,6 +15,13 @@ public enum Mark {
         this.mark = mark;
     }
 
+    public Mark setOpposite() {
+        if(this.equals(X))
+            return Mark.O;
+        else
+            return Mark.X;
+    }
+
     @Override
     public String toString() {
         return mark;

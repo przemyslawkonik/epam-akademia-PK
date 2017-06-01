@@ -5,16 +5,7 @@ package model.board;
  */
 public enum Size {
 
-    SMALL(3),
-    MEDIUM(4);
+    SMALL();
 
-    private int size;
-
-    private Size(int size) {
-        this.size = size;
-    }
-
-    public int get() {
-        return size;
-    }
+    private Size() {}
 }

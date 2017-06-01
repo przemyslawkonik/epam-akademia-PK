@@ -1,9 +1,9 @@
 package model.game;
 
 import model.board.Board;
-import model.board.FieldIsAlreadyMarkedException;
 import model.board.Size;
 import model.field.Field;
+import model.field.FieldIsAlreadyMarkedException;
 import model.field.Mark;
 import model.player.Player;
 import model.player.UnknownPlayerException;

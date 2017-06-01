@@ -1,4 +1,4 @@
-package model.board;
+package model.field;
 
 /**
  * Created by Przemysław Konik on 2017-05-30.

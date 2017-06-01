@@ -1,6 +1,7 @@
 package model.board;
 
 import model.field.Field;
+import model.field.FieldIsAlreadyMarkedException;
 import model.field.Mark;
 
 import java.util.LinkedList;

@@ -60,6 +60,8 @@ public class TicTacToeBoard implements Board {
     @Override
     public void setField(int row, int column, Mark mark) {
         int position = rows * row + column;
+        if(row >= rows || row < 0 || column < 0 || column >= columns)
+            throw new ArrayIndexOutOfBoundsException();
         if(position < 0 || position > fields.size())
             throw new ArrayIndexOutOfBoundsException();
         if(fields.get(position).getMark().equals(Mark.X) || fields.get(position).getMark().equals(Mark.O))

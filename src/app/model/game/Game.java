@@ -15,8 +15,8 @@ import app.tools.enums.UserAnswer;
 public class Game {
 
     private final Board board;
-    private Player player1;
-    private Player player2;
+    private final Player player1;
+    private final Player player2;
     private State state;
 
     public Game() {

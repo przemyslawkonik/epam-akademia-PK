@@ -10,7 +10,7 @@ import app.tools.Input;
 public class Player {
 
     private Mark mark;
-    private Stats stats;
+    private final Stats stats;
 
     public Player() {
         this.mark = Mark.EMPTY;

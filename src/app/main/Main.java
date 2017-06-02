@@ -1,6 +1,6 @@
-package main;
+package app.main;
 
-import model.game.Game;
+import app.model.game.Game;
 
 /**
  * Created by Przemysław Konik on 2017-05-29.

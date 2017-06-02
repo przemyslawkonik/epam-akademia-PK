@@ -1,4 +1,4 @@
-package model.stats;
+package app.model.stats;
 
 /**
  * Created by Przemysław Konik on 2017-06-01.

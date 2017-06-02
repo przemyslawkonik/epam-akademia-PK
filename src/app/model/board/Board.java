@@ -1,7 +1,7 @@
-package model.board;
+package app.model.board;
 
-import model.field.Field;
-import model.field.Mark;
+import app.model.field.Field;
+import app.model.field.Mark;
 
 /**
  * Created by Przemysław Konik on 2017-06-01.

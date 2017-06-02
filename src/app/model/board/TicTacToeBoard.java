@@ -1,8 +1,8 @@
-package model.board;
+package app.model.board;
 
-import model.field.Field;
-import model.field.FieldIsAlreadyMarkedException;
-import model.field.Mark;
+import app.model.field.Field;
+import app.model.field.FieldIsAlreadyMarkedException;
+import app.model.field.Mark;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by Przemysław Konik on 2017-06-01.
  */
-public class TicTacToeBoard implements Board{
+public class TicTacToeBoard implements Board {
 
     private final List<Field> fields;
     private int columns;

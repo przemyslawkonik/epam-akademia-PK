@@ -1,4 +1,4 @@
-package model.game;
+package app.model.game;
 
 /**
  * Created by Przemysław Konik on 2017-06-01.

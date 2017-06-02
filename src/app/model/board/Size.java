@@ -1,4 +1,4 @@
-package model.board;
+package app.model.board;
 
 /**
  * Created by Przemysław Konik on 2017-05-29.

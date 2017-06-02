@@ -1,4 +1,4 @@
-package tools.enums;
+package app.tools.enums;
 
 /**
  * Created by Przemysław Konik on 2017-06-02.

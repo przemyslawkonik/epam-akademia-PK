@@ -1,8 +1,8 @@
-package model.player;
+package app.model.player;
 
-import model.field.Mark;
-import model.stats.Stats;
-import tools.Input;
+import app.model.field.Mark;
+import app.model.stats.Stats;
+import app.tools.Input;
 
 /**
  * Created by Przemysław Konik on 2017-05-29.

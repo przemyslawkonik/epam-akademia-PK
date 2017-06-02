@@ -1,8 +1,8 @@
-package model.game;
+package app.model.game;
 
-import model.board.Board;
-import model.field.Field;
-import model.field.Mark;
+import app.model.board.Board;
+import app.model.field.Field;
+import app.model.field.Mark;
 
 import java.util.ArrayList;
 import java.util.List;

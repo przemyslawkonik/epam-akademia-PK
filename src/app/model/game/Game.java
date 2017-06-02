@@ -1,13 +1,13 @@
-package model.game;
+package app.model.game;
 
-import model.board.Board;
-import model.board.Size;
-import model.board.TicTacToeBoard;
-import model.field.FieldIsAlreadyMarkedException;
-import model.field.Mark;
-import model.player.Player;
-import tools.Input;
-import tools.enums.UserAnswer;
+import app.model.board.Board;
+import app.model.board.Size;
+import app.model.board.TicTacToeBoard;
+import app.model.field.FieldIsAlreadyMarkedException;
+import app.model.field.Mark;
+import app.model.player.Player;
+import app.tools.Input;
+import app.tools.enums.UserAnswer;
 
 /**
  * Created by Przemysław Konik on 2017-05-30.

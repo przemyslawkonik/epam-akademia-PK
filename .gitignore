@@ -1,5 +1,6 @@
 /out
 .idea/workspace.xml
 .idea/artifacts/
-src/META-INF
+src/main/java/META-INF
 *.iml
+target/

@@ -6,8 +6,8 @@ import model.board.TicTacToeBoard;
 import model.field.FieldIsAlreadyMarkedException;
 import model.field.Mark;
 import model.player.Player;
-
-import java.util.*;
+import tools.Input;
+import tools.enums.UserAnswer;
 
 /**
  * Created by Przemysław Konik on 2017-05-30.
@@ -27,92 +27,107 @@ public class Game {
     }
 
     public void start() {
-        Scanner scanner = new Scanner(System.in);
-        String answer;
-        do {
+        while (true) {
             System.out.println("Do you want to start a new game (y or n)?");
-            answer = scanner.nextLine().toUpperCase();
-            if(answer.equals("Y")) {
-                board.clear();
-                state = State.GAME_IN_PROGRESS;
-                play();
-            } else if (answer.equals("N")) {
-                System.exit(0);
+            try {
+                if (isStart()) {
+                    prepare();
+                    play();
+                } else System.exit(0);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Wrong answer! Try again!");
             }
-        }while(true);
+        }
+    }
+
+    private boolean isStart() {
+        return UserAnswer.valueOf(Input.get()).isYes();
+    }
+
+    private void prepare() {
+        board.clear();
+        state = State.GAME_IN_PROGRESS;
     }
 
     private void play() {
-        Mark mark = whoIsFirst();
-        while(true) {
-            if(mark.equals(player1.getMark()))
+        Player currentPlayer = whoIsFirst();
+        while (true) {
+            if (currentPlayer.equals(player1)) {
                 turn(player1);
-            else
+            } else {
                 turn(player2);
-
-            if(!state.equals(State.GAME_IN_PROGRESS)) {
+            }
+            if (!state.equals(State.GAME_IN_PROGRESS)) {
                 break;
             }
-            mark = mark.setOpposite();
+            currentPlayer = switchPlayer(currentPlayer);
         }
+        updateStats(currentPlayer);
         board.show();
-        updateStats(mark);
-        showResult(mark);
+        showResult(currentPlayer);
     }
 
-    private void updateStats(Mark mark) {
-        if(mark.equals(player1.getMark()))
-            player1.getStats().addWin();
+    private Player switchPlayer(Player player) {
+        if(player.equals(player1))
+            return player2;
         else
-            player2.getStats().addWin();
+            return player1;
     }
 
-    private void showResult(Mark mark) {
+    private void updateStats(Player player) {
+        if(state.equals(State.WIN))
+            player.getStats().addWin();
+    }
+
+    private void showResult(Player player) {
         switch (state) {
             case WIN: {
-                System.out.println("The winner is " + mark + "  " + player1.getMark() + ": " + player1.getStats().getWins() + " | " +
-                        player2.getMark() + ": " + player2.getStats().getWins());
+                System.out.println("The winner is " + player.getMark());
                 break;
             }
             case DRAW: {
-                System.out.println("The match result is draw   " + player1.getMark() + ": " + player1.getStats().getWins() + " | " +
-                        player2.getMark() + ": " + player2.getStats().getWins());
+                System.out.println("The match result is draw");
                 break;
             }
         }
+        player1.showStats();
+        player2.showStats();
     }
 
-    private Mark whoIsFirst() {
-        System.out.println("Who is starting (O or X)");
+    private Player whoIsFirst() {
         while(true) {
+            System.out.println("Who is starting (O or X)");
             try{
-                String input = new Scanner(System.in).nextLine().toUpperCase();
-                return Mark.valueOf(input);
+                Mark mark = Mark.valueOf(Input.get().toUpperCase());
+                if(mark.equals(player1.getMark()))
+                    return player1;
+                else
+                    return player2;
             }catch (IllegalArgumentException e) {
-                System.out.println("Unknown player");
+                System.out.println("Unknown player! Try again!");
             }
         }
     }
 
     private void turn(Player player) {
-        System.out.println("Player " + player.getMark() + " turn");
         int row, column;
         while (true) {
-            board.show();
             try {
+                board.show();
+                System.out.println("Player " + player.getMark() + " turn");
                 System.out.println("Select row: ");
-                row = player.selectRow(board);
+                row = player.selectRow();
 
                 System.out.println("Select column: ");
-                column = player.selectColumn(board);
+                column = player.selectColumn();
 
                 board.setField(row, column, player.getMark());
                 state = new Result().get(row, column, board);
                 break;
-            } catch (InputMismatchException e) {
+            } catch (IllegalArgumentException e) {
                 System.out.println("Value is not an Integer");
             } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("Given value is out of the board");
+                System.out.println("Given values are out of the board");
             } catch (FieldIsAlreadyMarkedException e) {
                 System.out.println("Selected field is already marked");
             }

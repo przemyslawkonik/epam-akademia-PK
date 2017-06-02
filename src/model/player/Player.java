@@ -1,10 +1,8 @@
 package model.player;
 
-import model.board.Board;
 import model.field.Mark;
 import model.stats.Stats;
-
-import java.util.Scanner;
+import tools.Input;
 
 /**
  * Created by Przemysław Konik on 2017-05-29.
@@ -24,22 +22,18 @@ public class Player {
         stats = new Stats();
     }
 
-    public int selectRow(Board board) {
-        Scanner scanner = new Scanner(System.in);
-        int row = scanner.nextInt();
-        row-=1;
-        if(row < 0 || row >= board.rows())
-            throw new ArrayIndexOutOfBoundsException();
-        return row;
+    public int selectRow() {
+        int row = Integer.parseInt(Input.get());
+        return --row;
     }
 
-    public int selectColumn(Board board) {
-        Scanner scanner = new Scanner(System.in);
-        int column = scanner.nextInt();
-        column-=1;
-        if(column < 0 || column >= board.columns())
-            throw new ArrayIndexOutOfBoundsException();
-        return column;
+    public int selectColumn() {
+        int column = Integer.parseInt(Input.get());
+        return --column;
+    }
+
+    public void showStats() {
+        System.out.println(getMark() + ": " + stats.getWins());
     }
 
     public Stats getStats() {
